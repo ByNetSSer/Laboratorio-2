@@ -11,31 +11,99 @@ public class Movement : MonoBehaviour
     [SerializeField] private float distance;
     [SerializeField] private float Force = 20;
     [SerializeField] private LayerMask layer;
+    private bool canJump;
+    private int JumpEx = 1;
+    [SerializeField] private bool canChangeColor = true;
     [Header("Colores")]
     [SerializeField] private Color Collision;
     [SerializeField] private Color Collisionnt;
     private void Update()
     {
         horizontal = Input.GetAxis("Horizontal");
-        if (Input.GetKeyDown(KeyCode.Space))
+        
+        RaycastHit2D Ray = Physics2D.Raycast(transform.position, Vector2.down * distance, distance, layer);
+        if (Input.GetKeyDown(KeyCode.Space) &&( canJump || JumpEx > 0))
         {
             Rg2.AddForce(Vector2.up * Force);
+            if (Ray.collider == null)
+            {
+                JumpEx = JumpEx - 1;
+
+            }
         }
-        RaycastHit2D Ray = Physics2D.Raycast(transform.position, Vector2.down * distance, distance, layer);
-        
         if (Ray.collider != null)
         {
             Debug.DrawRay(transform.position, Vector2.down * distance, Collision);
+            canJump = true;
+            JumpEx = 1;
         }
         else
         {
             Debug.DrawRay(transform.position, Vector2.down * distance, Collisionnt);
+            canJump = false;
         }
+        if (Input.GetKeyDown("left") && canChangeColor)
+        {
+            GetComponent<SpriteRenderer>().color = Color.red;
+        }
+        else if (Input.GetKeyDown("right") && canChangeColor)
+        {
+            GetComponent<SpriteRenderer>().color = Color.green;
+        }
+        /*
+        if (Input.GetButtonDown("Fire1") && canChangeColor)
+        {
+            GetComponent<SpriteRenderer>().color = Color.red;
+        }
+        */
+
     }
     private void FixedUpdate()
     {
         Rg2.velocity = new Vector2(horizontal* velocity, Rg2.velocity.y);
         
+        
+    }
+
+    
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        /*
+        if (collision.gameObject.tag == "Color" && GetComponent<SpriteRenderer>().color == collision.gameObject.GetComponent<SpriteRenderer>().color)
+        {
+            canChangeColor = false;
+            collision.gameObject.GetComponent<Muro>().SetAction(false);
+        }
+        */
+    }
+    
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Color" && GetComponent<SpriteRenderer>().color == collision.gameObject.GetComponent<SpriteRenderer>().color)
+        {
+            canChangeColor = false;
+            collision.gameObject.GetComponent<Muro>().SetAction(false);
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Color" && GetComponent<SpriteRenderer>().color == collision.gameObject.GetComponent<SpriteRenderer>().color)
+        {
+            canChangeColor = true;
+            collision.gameObject.GetComponent<Muro>().SetAction(true);
+        }
+    }
+
+
+
+
+    private void OnTriggerEnter2D(Collision2D collision)
+    {
+        
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
         
     }
 }
