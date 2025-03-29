@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
+using UnityEngine.SceneManagement;
 public class PlayerSistem : MonoBehaviour
 {
     [SerializeField] private int Vidas;
@@ -25,9 +25,17 @@ public class PlayerSistem : MonoBehaviour
         inmortalidad = true;
 
     }
+    private void  GetDamage(int daño)
+    {
+        Vidas = Vidas - daño;
+    }
     // Update is called once per frame
     void Update()
     {
+        if (Vidas <=0)
+        {
+            SceneManager.LoadScene("gameplay");
+        }
         texto.text = Vidas.ToString();
         if (Tiempo > conteo && inmortalidad == true)
         {
@@ -50,6 +58,10 @@ public class PlayerSistem : MonoBehaviour
         if (collision.gameObject.tag == "Color" && GetComponent<SpriteRenderer>().color != collision.gameObject.GetComponent<SpriteRenderer>().color && inmortalidad == false)
         {
             GetDamage();
+        }
+        if (collision.gameObject.tag == "Vacio" && GetComponent<SpriteRenderer>().color != collision.gameObject.GetComponent<SpriteRenderer>().color && inmortalidad == false)
+        {
+            GetDamage(10);
         }
     }
 }
