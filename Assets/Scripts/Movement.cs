@@ -20,15 +20,14 @@ public class Movement : MonoBehaviour
     private void Update()
     {
         horizontal = Input.GetAxis("Horizontal");
-        
+
         RaycastHit2D Ray = Physics2D.Raycast(transform.position, Vector2.down * distance, distance, layer);
-        if (Input.GetKeyDown(KeyCode.Space) &&( canJump || JumpEx > 0))
+        if (Input.GetKeyDown(KeyCode.Space) && (canJump || JumpEx > 0))
         {
             Rg2.AddForce(Vector2.up * Force);
             if (Ray.collider == null)
             {
                 JumpEx = JumpEx - 1;
-
             }
         }
         if (Ray.collider != null)
@@ -50,34 +49,21 @@ public class Movement : MonoBehaviour
         {
             GetComponent<SpriteRenderer>().color = Color.green;
         }
-        /*
-        if (Input.GetButtonDown("Fire1") && canChangeColor)
+        else if (Input.GetKeyDown("up") && canChangeColor)
         {
-            GetComponent<SpriteRenderer>().color = Color.red;
+            GetComponent<SpriteRenderer>().color = Color.yellow;
         }
-        */
-
+        else if (Input.GetKeyDown("down") && canChangeColor)
+        {
+            GetComponent<SpriteRenderer>().color = Color.cyan;
+        }
     }
     private void FixedUpdate()
     {
-        Rg2.velocity = new Vector2(horizontal* velocity, Rg2.velocity.y);
-        
-        
-    }
+        Rg2.velocity = new Vector2(horizontal * velocity, Rg2.velocity.y);
 
-    
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        /*
-        if (collision.gameObject.tag == "Color" && GetComponent<SpriteRenderer>().color == collision.gameObject.GetComponent<SpriteRenderer>().color)
-        {
-            canChangeColor = false;
-            collision.gameObject.GetComponent<Muro>().SetAction(false);
-        }
-        */
-    }
-    
 
+    }
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Color" && GetComponent<SpriteRenderer>().color == collision.gameObject.GetComponent<SpriteRenderer>().color)
@@ -95,15 +81,4 @@ public class Movement : MonoBehaviour
         }
     }
 
-
-
-
-    private void OnTriggerEnter2D(Collision2D collision)
-    {
-        
-    }
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        
-    }
 }

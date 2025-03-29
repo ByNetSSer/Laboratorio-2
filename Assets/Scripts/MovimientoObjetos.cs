@@ -18,7 +18,6 @@ public class MovimientoObjetos : MonoBehaviour
     }
     private void Update()
     {
-        
         transform.position = Vector2.MoveTowards(transform.position, objetivo, velocity * Time.deltaTime);
         if (Vector2.Distance(transform.position, objetivo)  == 0 && actual)
         {
@@ -31,12 +30,6 @@ public class MovimientoObjetos : MonoBehaviour
         {
                 actual = true;
         }
-        /*
-        else if (Vector2.Distance(transform.position, objetivo) < 0.1 && objetivo != Puntos[objetg])
-        {
-            //objetivo = Puntos[1];
-        }
-        */
         if (objetg == Puntos.Length)
         {
             objetg = 0;
