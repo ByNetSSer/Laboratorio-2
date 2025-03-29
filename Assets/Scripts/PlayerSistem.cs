@@ -13,9 +13,11 @@ public class PlayerSistem : MonoBehaviour
     [SerializeField] private bool inmortalidad;
     [SerializeField] private float Tiempo;
     [SerializeField] private float conteo;
+    [SerializeField] private ButtonChangeColor pantalla; 
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1;
         barravida.fillAmount = 1;
     }
     private void GetDamage()
@@ -34,7 +36,7 @@ public class PlayerSistem : MonoBehaviour
     {
         if (Vidas <=0)
         {
-            SceneManager.LoadScene("gameplay");
+            pantalla.Pantalla("Perdiste", true);
         }
         texto.text = Vidas.ToString();
         if (Tiempo > conteo && inmortalidad == true)
@@ -59,7 +61,7 @@ public class PlayerSistem : MonoBehaviour
         {
             GetDamage();
         }
-        if (collision.gameObject.tag == "Vacio" && GetComponent<SpriteRenderer>().color != collision.gameObject.GetComponent<SpriteRenderer>().color && inmortalidad == false)
+        if (collision.gameObject.tag == "Vacio")
         {
             GetDamage(10);
         }

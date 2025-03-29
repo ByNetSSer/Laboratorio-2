@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 203987841}
   - component: {fileID: 203987844}
   - component: {fileID: 203987843}
+  - component: {fileID: 203987845}
   - component: {fileID: 203987842}
   m_Layer: 5
   m_Name: Button (1)
@@ -244,6 +245,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 203987840}
   m_CullTransparentMesh: 1
+--- !u!114 &203987845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 203987840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46341d5d8bc7aa74c9bba980f217a0ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 0}
+  color: {r: 0, g: 0, b: 0, a: 0}
+  pantalla: {fileID: 0}
+  texto: {fileID: 0}
+  Activate: 0
+  Mensaje: 
+  Escena: 
 --- !u!1 &278219419
 GameObject:
   m_ObjectHideFlags: 0
@@ -720,6 +740,7 @@ GameObject:
   - component: {fileID: 1157318878}
   - component: {fileID: 1157318881}
   - component: {fileID: 1157318880}
+  - component: {fileID: 1157318882}
   - component: {fileID: 1157318879}
   m_Layer: 5
   m_Name: Button
@@ -791,7 +812,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1157318880}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1157318882}
+        m_TargetAssemblyTypeName: ButtonChangeColor, Assembly-CSharp
+        m_MethodName: UserChangeScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1157318880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -830,6 +863,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1157318877}
   m_CullTransparentMesh: 1
+--- !u!114 &1157318882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1157318877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46341d5d8bc7aa74c9bba980f217a0ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 0}
+  color: {r: 0, g: 0, b: 0, a: 0}
+  pantalla: {fileID: 0}
+  texto: {fileID: 0}
+  Activate: 0
+  Mensaje: 
+  Escena: gameplay
 --- !u!1 &1752078847
 GameObject:
   m_ObjectHideFlags: 0
