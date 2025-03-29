@@ -407,11 +407,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4883235246242819735, guid: f362112862a5ea245b4d6da42173633c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.1
+      value: 8.2
       objectReference: {fileID: 0}
     - target: {fileID: 4883235246242819735, guid: f362112862a5ea245b4d6da42173633c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.58
+      value: 0.19
       objectReference: {fileID: 0}
     - target: {fileID: 4883235246242819735, guid: f362112862a5ea245b4d6da42173633c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -475,10 +475,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Puntos:
-  - {x: 8.1, y: 6.85}
   - {x: 8.1, y: -0.58}
+  - {x: 8.1, y: 6}
+  - {x: 20.14, y: 3.7}
   velocity: 2
   objetivo: {x: 0, y: 0}
+  actual: 0
+  objetg: 0
 --- !u!1 &2093939748
 GameObject:
   m_ObjectHideFlags: 0

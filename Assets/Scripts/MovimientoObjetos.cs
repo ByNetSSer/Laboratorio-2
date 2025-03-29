@@ -7,20 +7,41 @@ public class MovimientoObjetos : MonoBehaviour
     [SerializeField] private Vector2[] Puntos ;
     [SerializeField] private int velocity;
     [SerializeField] private Vector2 objetivo;
+    [SerializeField] private bool actual;
+    [SerializeField] private int objetg;
     private void Start()
     {
-        objetivo = Puntos[1];
+        objetg = 1;
+        objetivo = Puntos[objetg];
+
+        
     }
     private void Update()
     {
+        
         transform.position = Vector2.MoveTowards(transform.position, objetivo, velocity * Time.deltaTime);
-        if (Vector2.Distance(transform.position,objetivo) <0.1&&objetivo != Puntos[0] )
+        if (Vector2.Distance(transform.position, objetivo)  == 0 && actual)
         {
-            objetivo = Puntos[0];
+            actual = false;
+            objetg = objetg + 1;
+
+            //objetivo = Puntos[0];
         }
-        else if (Vector2.Distance(transform.position, objetivo) < 0.1 && objetivo != Puntos[1])
+        if ( Vector2.Distance(transform.position, objetivo) > 1)
         {
-            objetivo = Puntos[1];
+                actual = true;
         }
+        /*
+        else if (Vector2.Distance(transform.position, objetivo) < 0.1 && objetivo != Puntos[objetg])
+        {
+            //objetivo = Puntos[1];
+        }
+        */
+        if (objetg == Puntos.Length)
+        {
+            objetg = 0;
+
+        }
+        objetivo = Puntos[objetg];
     }
 }
