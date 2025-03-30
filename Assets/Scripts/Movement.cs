@@ -13,12 +13,16 @@ public class Movement : MonoBehaviour
     [SerializeField] private LayerMask layer;
     private bool canJump;
     private int JumpEx = 1;
-    [SerializeField] private bool canChangeColor = true;
+    [SerializeField] public bool canChangeColor = true;
     [Header("Colores")]
     [SerializeField] private Color Collision;
     [SerializeField] private Color Collisionnt;
     private void Update()
     {
+        /*
+         * por un fallo que ocurre cuando comienzo a usar el mouse, de repente si se preciona AWSD + Space en el input de el proyect settings
+         * hacen que emule el left up down right, por ello para que funcione lo que implemente me vi obligado a usar el metodo no eficaz 
+         * */
         horizontal = Input.GetAxis("Horizontal");
 
         RaycastHit2D Ray = Physics2D.Raycast(transform.position, Vector2.down * distance, distance, layer);
@@ -41,6 +45,7 @@ public class Movement : MonoBehaviour
             Debug.DrawRay(transform.position, Vector2.down * distance, Collisionnt);
             canJump = false;
         }
+        
         if (Input.GetKeyDown("left") && canChangeColor)
         {
             GetComponent<SpriteRenderer>().color = Color.red;
@@ -51,12 +56,14 @@ public class Movement : MonoBehaviour
         }
         else if (Input.GetKeyDown("up") && canChangeColor)
         {
+            //new Color(1, 1, 0, 1);
             GetComponent<SpriteRenderer>().color = Color.yellow;
         }
         else if (Input.GetKeyDown("down") && canChangeColor)
         {
             GetComponent<SpriteRenderer>().color = Color.cyan;
         }
+        
     }
     private void FixedUpdate()
     {

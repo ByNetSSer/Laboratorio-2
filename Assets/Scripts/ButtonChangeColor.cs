@@ -14,12 +14,16 @@ public class ButtonChangeColor : MonoBehaviour
     [SerializeField] private bool Activate;
     [SerializeField] private string Mensaje;
     [SerializeField] private string Escena;
-
+    [SerializeField] private Movement player;
     // Start is called before the first frame update
 
     public void Onclickbutton()
     {
-        Player.color = color;
+        if (player.canChangeColor == true)
+        {
+            Player.color = color;
+        }
+        
     }
     public void UserChangeScene()
     {
