@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using UnityEngine.SceneManagement;
 using TMPro;
 public class ButtonChangeColor : MonoBehaviour
@@ -8,47 +9,27 @@ public class ButtonChangeColor : MonoBehaviour
     [Header("mecanica de color")]
     [SerializeField] private SpriteRenderer Player;
     [SerializeField] private Color color;
-    [Header("Botones General")]
-    [SerializeField] private GameObject pantalla;
-    [SerializeField] private TextMeshProUGUI texto;
-    [SerializeField] private bool Activate;
-    [SerializeField] private string Mensaje;
-    [SerializeField] private string Escena;
     [SerializeField] private Movement player;
+    public static event Action<Color>OnChangeColor;
     // Start is called before the first frame update
-
+    private void OnEnable()
+    {
+        Movement.ChangeColor += InvokeChange;
+    }
+    private void OnDisable()
+    {
+        Movement.ChangeColor -= InvokeChange;
+    }
     public void Onclickbutton()
     {
         if (player.canChangeColor == true)
         {
             Player.color = color;
         }
-        
+        InvokeChange();
     }
-    public void UserChangeScene()
+   public void InvokeChange()
     {
-        ChangeScene(Escena);
-    }
-    public void UserPantalla()
-    {
-        Pantalla(Mensaje, Activate);
-    }
-    public void Pantalla(string mensaje, bool Activado)
-    {
-
-        pantalla.SetActive(Activado);
-        texto.text = mensaje;
-    }
-     public void ChangeScene(string escena)
-    {
-        SceneManager.LoadScene(escena);
-    }
-    public void Salir()
-    {
-        Application.Quit();
-    }
-    public void Pausar(int pausa)
-    {
-        Time.timeScale = pausa;
+        OnChangeColor?.Invoke(Player.color);
     }
 }

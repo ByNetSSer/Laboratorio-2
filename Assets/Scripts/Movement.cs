@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 public class Movement : MonoBehaviour
 {
     [Header("Datos")]
@@ -17,6 +17,7 @@ public class Movement : MonoBehaviour
     [Header("Colores")]
     [SerializeField] private Color Collision;
     [SerializeField] private Color Collisionnt;
+    public static event Action ChangeColor;
     private void Update()
     {
         /*
@@ -45,7 +46,17 @@ public class Movement : MonoBehaviour
             Debug.DrawRay(transform.position, Vector2.down * distance, Collisionnt);
             canJump = false;
         }
-        
+        if (Input.anyKeyDown)
+        {
+            ButtonPreseed();
+        }  
+    }
+    private void FixedUpdate()
+    {
+        Rg2.velocity = new Vector2(horizontal * velocity, Rg2.velocity.y);
+    }
+    private void ButtonPreseed()
+    {
         if (Input.GetKeyDown("left") && canChangeColor)
         {
             GetComponent<SpriteRenderer>().color = Color.red;
@@ -56,36 +67,35 @@ public class Movement : MonoBehaviour
         }
         else if (Input.GetKeyDown("up") && canChangeColor)
         {
-            //new Color(1, 1, 0, 1);
             GetComponent<SpriteRenderer>().color = Color.yellow;
         }
         else if (Input.GetKeyDown("down") && canChangeColor)
         {
             GetComponent<SpriteRenderer>().color = Color.cyan;
         }
-        
-    }
-    private void FixedUpdate()
-    {
-        Rg2.velocity = new Vector2(horizontal * velocity, Rg2.velocity.y);
-
-
+        if (GetComponent<SpriteRenderer>().color != Color.white)
+        {
+            ChangeColor?.Invoke();
+        }
+       
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Color" && GetComponent<SpriteRenderer>().color == collision.gameObject.GetComponent<SpriteRenderer>().color)
+        
+        if (collision.gameObject.tag == "Color")
         {
             canChangeColor = false;
-            collision.gameObject.GetComponent<Muro>().SetAction(false);
         }
+        
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Color" && GetComponent<SpriteRenderer>().color == collision.gameObject.GetComponent<SpriteRenderer>().color)
+        
+        if (collision.gameObject.tag == "Color")
         {
             canChangeColor = true;
-            collision.gameObject.GetComponent<Muro>().SetAction(true);
         }
+        
     }
 
 }
