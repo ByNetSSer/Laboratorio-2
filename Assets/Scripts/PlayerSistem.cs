@@ -35,17 +35,17 @@ public class PlayerSistem : MonoBehaviour
 
     private void OnEnable()
     {
-        OnEnd += TimeStop;
+        OnEnd += GameOver;
         Object.AddCoin += AddCoins;
         Object.AddHealt += AddLife;
     }
     private void OnDisable()
     {
-        OnEnd -= TimeStop;
+        OnEnd -= GameOver;
         Object.AddCoin -= AddCoins;
         Object.AddHealt -= AddLife;
     }
-    private void TimeStop()
+    private void GameOver()
     {
         Time.timeScale = 0;
         if (Vidas <=0)
