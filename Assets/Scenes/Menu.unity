@@ -403,12 +403,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd5ff78442f4df94e96a9138430b0225, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pantalla: {fileID: 0}
-  texto: {fileID: 0}
-  Activate: 0
-  Mensaje: 
   Escena: 
-  player: {fileID: 0}
+  Texto: {fileID: 546832774}
+  Pantalla: {fileID: 451533438}
 --- !u!1 &278219419
 GameObject:
   m_ObjectHideFlags: 0
@@ -1021,12 +1018,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd5ff78442f4df94e96a9138430b0225, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pantalla: {fileID: 0}
-  texto: {fileID: 0}
-  Activate: 0
-  Mensaje: 
   Escena: gameplay
-  player: {fileID: 0}
+  Texto: {fileID: 278219421}
+  Pantalla: {fileID: 451533438}
 --- !u!1 &1752078847
 GameObject:
   m_ObjectHideFlags: 0

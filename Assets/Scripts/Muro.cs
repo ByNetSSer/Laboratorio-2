@@ -10,17 +10,15 @@ public class Muro : MonoBehaviour
     private void Awake()
     {
         Renderer = GetComponent<SpriteRenderer>();
-
-
     }
     private void OnEnable()
     {
-        ButtonChangeColor.OnChangeColor += ChangeColor;
+        PlayerSistem.OnChangeColor += ChangeColor;
 
     }
     private void OnDisable()
     {
-        ButtonChangeColor.OnChangeColor -= ChangeColor;
+        PlayerSistem.OnChangeColor -= ChangeColor;
     }
     public void ChangeColor(Color A)
     {

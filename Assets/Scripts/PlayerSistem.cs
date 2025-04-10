@@ -16,49 +16,42 @@ public class PlayerSistem : MonoBehaviour
     [SerializeField] private bool inmortalidad;
     [SerializeField] private float Tiempo;
     [SerializeField] private float conteo;
-    [SerializeField] private ButtonsGeneral pantalla;
+    [SerializeField] private Pantalla pantalla;
     [Header("Cronometro")]
     [SerializeField] private TextMeshProUGUI count;
     [SerializeField] private float temporizador;
     [SerializeField] private TextMeshProUGUI Finalcount;
-    public static event Action OnEnd;
+    [SerializeField] private float ActualColor;
+    [SerializeField] private Color[] ArrayColors;
+    public static event Action<Color> OnChangeColor;
+    public static event Action <int>OnEnd;
     public static event Action<int> Points;
-
+    SpriteRenderer renderer;
     int minutos =0;
     int segundo = 0;
 
     // Start is called before the first frame update
     void Start()
     {
+
+        renderer = GetComponent<SpriteRenderer>();
+        renderer.color = ArrayColors[0];
+        OnChangeColor?.Invoke(renderer.color);
         Time.timeScale = 1;
         barravida.fillAmount = 1;
     }
 
     private void OnEnable()
     {
-        OnEnd += GameOver;
         Object.AddCoin += AddCoins;
         Object.AddHealt += AddLife;
     }
     private void OnDisable()
     {
-        OnEnd -= GameOver;
         Object.AddCoin -= AddCoins;
         Object.AddHealt -= AddLife;
     }
-    private void GameOver()
-    {
-        Time.timeScale = 0;
-        if (Vidas <=0)
-        {
-            pantalla.Pantalla("Perdiste", true);
-        }
-        else
-        {
-            pantalla.Pantalla("Ganaste", true);
-        }
-        
-    }
+ 
     private void GetDamage()
     {
         barravida.fillAmount = barravida.fillAmount - 0.1f;
@@ -76,8 +69,8 @@ public class PlayerSistem : MonoBehaviour
         temporizador = temporizador + Time.deltaTime;
         if (Vidas <=0)
         {
-            OnEnd?.Invoke();
-
+            OnEnd?.Invoke(Vidas);
+            Debug.Log("me mori");
 
             
             if (segundo > 9)
@@ -114,6 +107,21 @@ public class PlayerSistem : MonoBehaviour
         }
 
     }
+    public void OnColor(InputAction.CallbackContext callbackContext)
+    {
+        if (callbackContext.phase != InputActionPhase.Performed) return;
+         ActualColor = ActualColor +callbackContext.ReadValue<float>();
+        if (ActualColor <0)
+        {
+            ActualColor = ArrayColors.Length - 1;
+        }
+        else if (ActualColor> ArrayColors.Length - 1)
+        {
+            ActualColor = 0;
+        }
+        renderer.color = ArrayColors[((int)ActualColor)];
+        OnChangeColor?.Invoke(renderer.color);
+    }
     private void AddCoins()
     {
         Coins = Coins + 5;
@@ -136,7 +144,7 @@ public class PlayerSistem : MonoBehaviour
         {
             GetDamage();
         }
-        if (collision.gameObject.tag == "Vacio" && pantalla.isActiveAndEnabled == false)
+        if (collision.gameObject.tag == "Vacio" )
         {
             GetDamage(Vidas);
         }
@@ -146,7 +154,7 @@ public class PlayerSistem : MonoBehaviour
     {
         if (collision.gameObject.tag == "Final")
         {
-            OnEnd?.Invoke();
+            OnEnd?.Invoke(Vidas);
             
             if (segundo > 9)
             {

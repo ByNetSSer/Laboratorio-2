@@ -11,7 +11,6 @@ public class ButtonChangeColor : MonoBehaviour
     [SerializeField] private Color color;
     [SerializeField] private Movement player;
     public static event Action<Color>OnChangeColor;
-    // Start is called before the first frame update
     private void OnEnable()
     {
         Movement.ChangeColor += InvokeChange;
@@ -19,14 +18,6 @@ public class ButtonChangeColor : MonoBehaviour
     private void OnDisable()
     {
         Movement.ChangeColor -= InvokeChange;
-    }
-    public void Onclickbutton()
-    {
-        if (player.canChangeColor == true)
-        {
-            Player.color = color;
-        }
-        InvokeChange();
     }
    public void InvokeChange()
     {

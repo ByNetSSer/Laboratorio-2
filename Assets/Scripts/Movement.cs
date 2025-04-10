@@ -23,11 +23,6 @@ public class Movement : MonoBehaviour
     float _horizontal;
     private void Update()
     {
-        /*
-         * por un fallo que ocurre cuando comienzo a usar el mouse, de repente si se preciona AWSD + Space en el input de el proyect settings
-         * hacen que emule el left up down right, por ello para que funcione lo que implemente me vi obligado a usar el metodo no eficaz 
-         * */
-
          Ray = Physics2D.Raycast(transform.position, Vector2.down * distance, distance, layer);
         
         if (Ray.collider != null)
@@ -41,10 +36,7 @@ public class Movement : MonoBehaviour
             Debug.DrawRay(transform.position, Vector2.down * distance, Collisionnt);
             canJump = false;
         }
-        if (Input.anyKeyDown)
-        {
-            ButtonPreseed();
-        }  
+
     }
     private void FixedUpdate()
     {
@@ -71,30 +63,6 @@ public class Movement : MonoBehaviour
             }
         }
         
-    }
-    private void ButtonPreseed()
-    {
-        if (Input.GetKeyDown("left") && canChangeColor)
-        {
-            GetComponent<SpriteRenderer>().color = Color.red;
-        }
-        else if (Input.GetKeyDown("right") && canChangeColor)
-        {
-            GetComponent<SpriteRenderer>().color = Color.green;
-        }
-        else if (Input.GetKeyDown("up") && canChangeColor)
-        {
-            GetComponent<SpriteRenderer>().color = Color.yellow;
-        }
-        else if (Input.GetKeyDown("down") && canChangeColor)
-        {
-            GetComponent<SpriteRenderer>().color = Color.cyan;
-        }
-        if (GetComponent<SpriteRenderer>().color != Color.white)
-        {
-            ChangeColor?.Invoke();
-        }
-       
     }
     private void OnTriggerStay2D(Collider2D collision)
     {

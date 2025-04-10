@@ -9,6 +9,7 @@ public class MovimientoObjetos : MonoBehaviour
     [SerializeField] private Vector2 objetivo;
     [SerializeField] private bool actual;
     [SerializeField] private int objetg;
+    [SerializeField] private bool Canmove = true;
     private void Start()
     {
         objetg = 1;
@@ -18,7 +19,11 @@ public class MovimientoObjetos : MonoBehaviour
     }
     private void Update()
     {
-        transform.position = Vector2.MoveTowards(transform.position, objetivo, velocity * Time.deltaTime);
+        if (Canmove)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, objetivo, velocity * Time.deltaTime);
+        }
+        
         if (Vector2.Distance(transform.position, objetivo)  == 0 && actual)
         {
             actual = false;
@@ -36,5 +41,24 @@ public class MovimientoObjetos : MonoBehaviour
 
         }
         objetivo = Puntos[objetg];
+    }
+    private void SameColor(Color A)
+    {
+        if (A == transform.GetComponent<SpriteRenderer>().color)
+        {
+            Canmove = false;
+        }
+        else
+        {
+            Canmove = true;
+        }
+    }
+    private void OnEnable()
+    {
+        PlayerSistem.OnChangeColor += SameColor;
+    }
+    private void OnDisable()
+    {
+        PlayerSistem.OnChangeColor -= SameColor;
     }
 }

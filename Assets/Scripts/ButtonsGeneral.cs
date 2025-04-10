@@ -6,31 +6,29 @@ using TMPro;
 using System;
 public class ButtonsGeneral : MonoBehaviour
 {
-    [Header("Botones General")]
-    [SerializeField] private GameObject pantalla;
-    [SerializeField] private TextMeshProUGUI texto;
-    [SerializeField] private bool Activate;
-    [SerializeField] private string Mensaje;
+    [Header("ChangeScenes")]
+
     [SerializeField] private string Escena;
-    [SerializeField] private Movement player;
+    [SerializeField] private TextMeshProUGUI Texto;
+    [SerializeField] GameObject Pantalla;
 
     public void UserChangeScene()
     {
         ChangeScene(Escena);
     }
-    public void UserPantalla()
-    {
-        Pantalla(Mensaje, Activate);
-    }
-    public void Pantalla(string mensaje, bool Activado)
-    {
-
-        pantalla.SetActive(Activado);
-        texto.text = mensaje;
-    }
+    
     public void ChangeScene(string escena)
     {
-        SceneManager.LoadScene(escena);
+        if (Texto.text != "Reanudar")
+        {
+            SceneManager.LoadScene(escena);
+        }
+        else
+        {
+            Pantalla.SetActive(false); 
+            Time.timeScale = 1;
+        }
+        
     }
     public void Salir()
     {
