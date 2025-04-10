@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.InputSystem;
 public class Movement : MonoBehaviour
 {
     [Header("Datos")]
@@ -18,6 +19,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private Color Collision;
     [SerializeField] private Color Collisionnt;
     public static event Action ChangeColor;
+    RaycastHit2D Ray;
     private void Update()
     {
         /*
@@ -26,15 +28,8 @@ public class Movement : MonoBehaviour
          * */
         horizontal = Input.GetAxis("Horizontal");
 
-        RaycastHit2D Ray = Physics2D.Raycast(transform.position, Vector2.down * distance, distance, layer);
-        if (Input.GetKeyDown(KeyCode.Space) && (canJump || JumpEx > 0))
-        {
-            Rg2.AddForce(Vector2.up * Force);
-            if (Ray.collider == null)
-            {
-                JumpEx = JumpEx - 1;
-            }
-        }
+         Ray = Physics2D.Raycast(transform.position, Vector2.down * distance, distance, layer);
+        
         if (Ray.collider != null)
         {
             Debug.DrawRay(transform.position, Vector2.down * distance, Collision);
@@ -54,6 +49,22 @@ public class Movement : MonoBehaviour
     private void FixedUpdate()
     {
         Rg2.velocity = new Vector2(horizontal * velocity, Rg2.velocity.y);
+    }
+    public void OnJump(InputAction.CallbackContext inputAction)
+    {
+        Debug.Log($"Jumpeando {inputAction.phase}");
+
+        if (inputAction.phase != InputActionPhase.Performed) return;
+
+        if ( (canJump || JumpEx > 0))
+        {
+            Rg2.AddForce(Vector2.up * Force);
+            if (Ray.collider == null)
+            {
+                JumpEx = JumpEx - 1;
+            }
+        }
+        
     }
     private void ButtonPreseed()
     {
