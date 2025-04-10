@@ -20,13 +20,13 @@ public class Movement : MonoBehaviour
     [SerializeField] private Color Collisionnt;
     public static event Action ChangeColor;
     RaycastHit2D Ray;
+    float _horizontal;
     private void Update()
     {
         /*
          * por un fallo que ocurre cuando comienzo a usar el mouse, de repente si se preciona AWSD + Space en el input de el proyect settings
          * hacen que emule el left up down right, por ello para que funcione lo que implemente me vi obligado a usar el metodo no eficaz 
          * */
-        horizontal = Input.GetAxis("Horizontal");
 
          Ray = Physics2D.Raycast(transform.position, Vector2.down * distance, distance, layer);
         
@@ -48,7 +48,13 @@ public class Movement : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        Rg2.velocity = new Vector2(horizontal * velocity, Rg2.velocity.y);
+
+        Rg2.velocity = new Vector2(_horizontal * velocity, Rg2.velocity.y);
+    }
+    public void OnMomevent(InputAction.CallbackContext callbackContext)
+    {
+        _horizontal = callbackContext.ReadValue<float>();
+        
     }
     public void OnJump(InputAction.CallbackContext inputAction)
     {
